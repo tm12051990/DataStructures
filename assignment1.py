@@ -93,17 +93,15 @@ def rotate(arr: StaticArray, steps: int) -> StaticArray:
     steps = steps % n #Adds a modulo operator to account for large number of steps and reduce needless rotation.
                       # 12 steps % 5 is the same as rotating 2 steps.
 
-    if steps == 0: #Handles an edge case if the steps are equal to 0.
+    new_arr = StaticArray(n)  # Value created to store rotated values if needed. New array will be same length (n) as StaticArray.
 
-        new_arr = StaticArray(n)
+    if steps == 0: #Handles an edge case if the steps are equal to 0.
 
         for i in range(n):
 
             new_arr[i] = arr[i] #Assigns new array.
 
         return new_arr
-
-    new_arr = StaticArray(n) #Value created to store rotated values if needed. New array will be same length (n) as StaticArray.
 
     if steps > 0:
 
@@ -191,34 +189,155 @@ def is_sorted(arr: StaticArray) -> int:
 # ------------------- PROBLEM 7 - FIND_MODE -----------------------------------
 
 def find_mode(arr: StaticArray) -> tuple[object, int]:
-    """
-    TODO: Write this implementation
-    """
-    pass
+    """defines a function that finds the mode and frequency of a static array"""
+
+    n = arr.length() #creates variable n equal to length of the array
+
+    mode = arr[0] #Creates a mode container equal to the current index
+    mode_count = 1 #Initializes mode to 1
+    current_value = arr[0] #Creates a counter to move through the array and increment repeated values
+    current_count = 1
+
+    for i in range(1, n):
+
+        if arr[i] == current_value: #Checks if last value is equal to the next value in the array.
+
+            current_count += 1 #If value is the same, increments the counter by 1.
+
+        else: #Once a new value in the index is reached, mode count, current count, and current value are updated.
+
+            if current_count > mode_count:
+
+                mode_count = current_count
+
+                current_value = arr[i]
+
+                current_count = 1
+
+    if current_count > mode_count: #Final check at the end of the loop.
+
+        mode = current_value
+
+        mode_count = current_count
+
+    return (mode, mode_count)
+
+
 
 # ------------------- PROBLEM 8 - REMOVE_DUPLICATES -------------------------
 
 def remove_duplicates(arr: StaticArray) -> StaticArray:
-    """
-    TODO: Write this implementation
-    """
-    pass
+    """defines a function that removes duplicates from a static array by placing unique elements into a new array"""
+
+    n = arr.length()
+
+    if n <= 1: #Handles edge case if there is only one element, and therefore, no duplicates.
+
+        return arr
+
+    new_arraycount = 1
+
+    for i in range(1, n): #Counts the unique elements for the new array and stores them in new_arraycount
+
+        if arr[i] != arr[i - 1]:
+
+            new_arraycount += 1
+
+    new_array = StaticArray(new_arraycount) #Creates new array with previous count as the number of elements.
+
+    new_array[0] = arr[0] #Sets the first element in the new array as the first element is always unique.
+
+    current_index = 1 #Index for inserting the results into the new array.
+
+    for i in range(1, n):
+
+        if arr[i] != arr[i - 1]:
+
+            current_index += 1
+
+            new_array[current_index] = arr[i] #Each unique value is added into the new array.
+
+    return new_array
+
 
 # ------------------- PROBLEM 9 - COUNT_SORT --------------------------------
 
 def count_sort(arr: StaticArray) -> StaticArray:
-    """
-    TODO: Write this implementation
-    """
-    pass
+    """defines a function that creates a counting sort algorithm by placing unique elements, in non-ascending order, into a new array"""
+
+    n = arr.length()
+
+    min_val = arr[0] #Create min_val and max_val to find the range and to handle negative numbers(indices) in the array.
+    max_val = arr[0]
+
+    for i in range(1, n): #Loop to find the range of the array.
+
+        if arr[i] > min_val:
+
+            min_val = arr[i]
+
+        elif arr[i] < max_val:
+
+            max_val = arr[i]
+
+    size = max_val - min_val + 1
+    count = [0] * size #Initializes the count array with zeros.
+
+    for i in range(n): #Loop that increments each value in the count array, we subtract the min_val to account for negative numbers.
+
+        count[arr[i] - min_val] += 1
+
+    output = StaticArray(n)
+
+    for i in range(1, n): #Loop that adds the previous index to the current index.
+
+        count[i] += count[i - 1]
+
+    for i in range(n -1, -1, -1): #Loop that starts at n - 1, stops when i >= 0, and decrements i by 1 index each loop.
+
+        output[count[arr[i] - min_val] - 1] = arr[i] #Places the values from the original array into their sorted indices.
+
+        count[arr[i] - min_val] -= 1 #Decrements count to ensure that a same element, if any, is placed into the correct position.
+
+    return output
 
 # ------------------- PROBLEM 10 - SORTED SQUARES ---------------------------
 
 def sorted_squares(arr: StaticArray) -> StaticArray:
-    """
-    TODO: Write this implementation
-    """
-    pass
+    """Defines a function that uses a two pointer method to square an array of integers the sort in non-descending order"""
+
+    n = arr.length()
+    squared = StaticArray(n) #The result array for the squared and sorted values
+    left = 0 #Initializes left pointer
+    right = n - 1 #Initializes right pointer
+    squared_index = n - 1 #Array will be filled from the end
+
+    while left <= right: #While loop that squares the left and right indices
+
+        left_square = arr[left] * arr[left]
+
+        right_square = arr[right] * arr[right]
+
+        if left_square > right_square: #Then sorts in non-descending order.
+
+            squared[squared_index] = left_square
+
+            left += 1 #Pointer shifts inward.
+
+        else:
+
+            squared[squared_index] = right_square
+
+            right -= 1 #Pointer shifts inward.
+
+        squared_index -= 1 #Result index moves backwards through the array.
+
+    return squared
+
+
+
+
+
 
 # ------------------- BASIC TESTING -----------------------------------------
 
