@@ -173,9 +173,13 @@ def is_sorted(arr: StaticArray) -> int:
             is_descending = False
 
         elif arr[i] > arr[i + 1]: #Checks if array is descending. Each element must be larger than the next.
-            # Ex. (4 > 3 > 2 > 1>.
+            # Ex. (4 > 3 > 2 > 1>).
 
             is_ascending = False
+
+        else:
+
+            return 0
 
     if is_ascending: #Provides specified return values for each result.
         return 1
