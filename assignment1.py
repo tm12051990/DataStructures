@@ -300,7 +300,7 @@ def count_sort(arr: StaticArray) -> StaticArray:
 
     for i in range(n -1, -1, -1): #Loop that starts at n - 1, stops when i >= 0, and decrements i by 1 index each loop.
 
-        output[count[arr[i] - min_val] - 1] = arr[i] #Places the values from the original array into their sorted indices.
+        output[n - count[arr[i] - min_val]] = arr[i] #Places the values from the original array into their sorted indices.
 
         count[arr[i] - min_val] -= 1 #Decrements count to ensure that a same element, if any, is placed into the correct position.
 
