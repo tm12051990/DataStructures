@@ -283,7 +283,7 @@ def count_sort(arr: StaticArray) -> StaticArray:
             max_val = arr[i]
 
     size = max_val - min_val + 1
-    count = [0] * size #Initializes the count array with zeros.
+    count = StaticArray(size) #Initializes the count array with zeros.
 
     for i in range(n): #Loop that increments each value in the count array, we subtract the min_val to account for negative numbers.
 
