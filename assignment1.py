@@ -255,9 +255,9 @@ def remove_duplicates(arr: StaticArray) -> StaticArray:
 
         if arr[i] != arr[i - 1]:
 
-            current_index += 1
+            new_array[current_index] = arr[i]  # Each unique value is added into the new array.
 
-            new_array[current_index] = arr[i] #Each unique value is added into the new array.
+            current_index += 1
 
     return new_array
 
