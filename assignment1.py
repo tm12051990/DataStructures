@@ -46,15 +46,15 @@ def fizz_buzz(arr: StaticArray) -> StaticArray:
 
         if arr[i] % 3 == 0 and arr[i] % 5 == 0: #checks if value is divisible by both 5 and 3.
 
-            new_array[i] = "FizzBuzz"
+            new_array[i] = "fizzbuzz"
 
         elif arr[i] % 3 == 0: #Checks if value is divisible by 3.
 
-            new_array[i] = "Fizz"
+            new_array[i] = "fizz"
 
         elif arr[i] % 5 == 0: #Checks if value is devisible by 5.
 
-            new_array[i] = "Buzz"
+            new_array[i] = "buzz"
 
         else:
             new_array[i] = value #If not divisible by 3 and/or 5, returns the value.
@@ -86,26 +86,103 @@ def reverse(arr: StaticArray) -> None:
 # ------------------- PROBLEM 4 - ROTATE ------------------------------------
 
 def rotate(arr: StaticArray, steps: int) -> StaticArray:
-    """
-    TODO: Write this implementation
-    """
-    pass
+    """defines a function that rotates a static array by steps(number of times) and returns the new Array"""
+
+    n = arr.length() #creates a variable n, the length of the array, to use in a modulo operator.
+
+    steps = steps % n #Adds a modulo operator to account for large number of steps and reduce needless rotation.
+                      # 12 steps % 5 is the same as rotating 2 steps.
+
+    if steps == 0: #Handles an edge case if the steps are equal to 0.
+
+        new_arr = StaticArray(n)
+
+        for i in range(n):
+
+            new_arr[i] = arr[i] #Assigns new array.
+
+        return new_arr
+
+    new_arr = StaticArray(n) #Value created to store rotated values if needed. New array will be same length (n) as StaticArray.
+
+    if steps > 0:
+
+        for i in range(n):
+
+            new_index = (i + steps) % n #Calculates right rotation while reducing over rotation with a modulo operator.
+
+            new_arr[new_index] = arr[i] #Assigns new array.
+
+    else:
+
+        steps = -steps #Allows us to treat left rotation (negative) like right rotation (positive) for easier calculation.
+
+        for i in range(n):
+
+            new_index = (i - steps) % n #Calculates left rotation while reducing over rotation with a modulo operator.
+
+            new_arr[new_index] = arr[i] #Assigns new array.
+
+    return new_arr
+
+
 
 # ------------------- PROBLEM 5 - SA_RANGE ----------------------------------
 
 def sa_range(start: int, end: int) -> StaticArray:
-    """
-    TODO: Write this implementation
-    """
-    pass
+    """defines a function that receives two integers "start" and "end" as arguments, then returns an array
+    with all values between the two integers"""
+
+    size = abs(end - start) + 1 #Calculates the size of the new array.
+
+    result = StaticArray(size) #Creates the new array with the size as the number of elements.
+
+    if start <= end:
+
+        for i in range(size):
+
+            result[i] = start + i #Organizes the values incrementing positively.
+
+    else:
+
+        for i in range(size):
+
+            result[i] = start - i #Organizes the values incrementing negatively.
+
+    return result
 
 # ------------------- PROBLEM 6 - IS_SORTED ---------------------------------
 
 def is_sorted(arr: StaticArray) -> int:
-    """
-    TODO: Write this implementation
-    """
-    pass
+    """defines a funciton that checks if a static array is sorted in ascending, descending, no order"""
+
+    n = arr.length() #Assigns length of the array to variable n
+
+    if n == 1: #Handles edge case if there is only one element in the array.
+
+        return 1
+
+    is_ascending = True #Assigns boolean values to ascending and descending.
+    is_descending = True
+
+    for i in range(n - 1): #Loops consecutively through the range
+
+        if arr[i] < arr[i + 1]: #Checks if array ascending. Each element must be smaller than the next.
+            # Ex. (1 < 2 < 3 < 4).
+
+            is_descending = False
+
+        elif arr[i] > arr[i + 1]: #Checks if array is descending. Each element must be larger than the next.
+            # Ex. (4 > 3 > 2 > 1>.
+
+            is_ascending = False
+
+    if is_ascending: #Provides specified return values for each result.
+        return 1
+    elif is_descending:
+        return -1
+    else:
+        return 0
 
 # ------------------- PROBLEM 7 - FIND_MODE -----------------------------------
 
