@@ -3,7 +3,7 @@
 # Course: CS261 - Data Structures
 # Assignment: 1
 # Due Date: Oct 21, 2024
-# Description:
+# Description: Assignment 1 covering Python fundamentals.
 
 
 from static_array import StaticArray
